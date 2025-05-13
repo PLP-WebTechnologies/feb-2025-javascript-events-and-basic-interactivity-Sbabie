@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Bundle of Joy</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+
+    /* Hover Box */
+    .hover-me {
+      padding: 10px;
+      background-color: lightblue;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+    }
+    .hover-me:hover {
+      background-color: steelblue;
+    }
+
+    /* Tabs */
+    .tab-content { display: none; margin-top: 10px; }
+    .tab-content.active { display: block; }
+
+    /* Animation */
+    .bouncy {
+      display: inline-block;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive Bundle of Joy</h1>
+
+  <!-- Button Click -->
+  <button id="clickMe">Click me!</button>
+
+  <!-- Hover Effect -->
+  <div class="hover-me">Hover over me!</div>
+
+  <!-- Keypress Detection -->
+  <p>Press any key to see it logged in the console.</p>
+
+  <!-- Double Click -->
+  <div ondblclick="alert('Double-clicked! Secret action triggered!')" style="cursor:pointer; margin-bottom: 20px;">
+    Double-click me for a surprise!
+  </div>
+
+  <!-- Button Changes Text/Color -->
+  <button id="colorBtn">Change me!</button>
+
+  <!-- Image Gallery -->
+  <div style="margin-top: 20px;">
+    <img id="gallery" src="IMG-20250415-WA0022.jpg" width="300">
+    <button onclick="nextImage()">Next</button>
+  </div>
+
+  <!-- Tabs -->
+  <div style="margin-top: 20px;">
+    <button onclick="showTab(0)">Tab 1</button>
+    <button onclick="showTab(1)">Tab 2</button>
+    <div id="tab0" class="tab-content active">Content for Tab 1</div>
+    <div id="tab1" class="tab-content">Content for Tab 2</div>
+  </div>
+
+  <!-- Animated Element -->
+  <div class="bouncy">I'm bouncy!</div>
+
+  <!-- Form Validation -->
+  <h2>Form Validation</h2>
+  <form id="myForm">
+    <input type="text" id="username" required placeholder="Username"><br><br>
+    <input type="email" id="email" required placeholder="Email"><br><br>
+    <input type="password" id="password" required placeholder="Password (min 8 chars)"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="feedback"></p>
+
+  <script>
+    // Button Click
+    document.getElementById('clickMe').addEventListener('click', () => {
+      alert("Button clicked!");
+    });
+
+    // Keypress Detection
+    document.addEventListener('keydown', (event) => {
+      console.log(`Key pressed: ${event.key}`);
+    });
+
+    // Button Changes Text/Color
+    const btn = document.getElementById('colorBtn');
+    btn.addEventListener('click', () => {
+      btn.textContent = "Changed!";
+      btn.style.backgroundColor = "orange";
+    });
+
+    // Image Gallery
+    const images = [
+      "https://via.placeholder.com/200x120?text=Image+1",
+      "https://via.placeholder.com/200x120?text=Image+2",
+      "https://via.placeholder.com/200x120?text=Image+3"
+    ];
+    let index = 0;
+    function nextImage() {
+      index = (index + 1) % images.length;
+      document.getElementById('gallery').src = images[index];
+    }
+
+    // Tabs
+    function showTab(tabIndex) {
+      document.querySelectorAll('.tab-content').forEach((tab, i) => {
+        tab.classList.toggle('active', i === tabIndex);
+      });
+    }
+
+    // Form Validation
+    const form = document.getElementById('myForm');
+    const passwordInput = document.getElementById('password');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = passwordInput.value;
+      if (password.length < 8) {
+        feedback.textContent = "Password must be at least 8 characters.";
+      } else {
+        feedback.textContent = "Form submitted successfully!";
+      }
+    });
+
+    passwordInput.addEventListener('input', () => {
+      feedback.textContent = passwordInput.value.length < 8
+        ? "Password too short."
+        : "Looks good!";
+    });
+  </script>
+
+</body>
+</html>
